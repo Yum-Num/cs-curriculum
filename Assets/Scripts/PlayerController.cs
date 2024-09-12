@@ -1,4 +1,5 @@
 using UnityEngine;
+
 public class PlayerController : MonoBehaviour
 {
     // Movement variables
@@ -8,13 +9,19 @@ public class PlayerController : MonoBehaviour
     private float yVector = 0f;
     private Rigidbody2D rb;
     public bool overworld;
-        void Start()
+    public bool platformer;
+    void Start()
     {
         // Get the Rigidbody2D component
         rb = GetComponent<Rigidbody2D>();
     }
     void Update()
     {
+        if (platformer)
+        {
+            ySpeed = 0;
+        }
+
         // Handle input
         float horizontalInput = Input.GetAxis("Horizontal");
         float verticalInput = Input.GetAxis("Vertical");
@@ -22,6 +29,14 @@ public class PlayerController : MonoBehaviour
         xVector = xSpeed * horizontalInput * Time.deltaTime;
         yVector = ySpeed * verticalInput * Time.deltaTime;
         transform.Translate(xVector, yVector, 0);
+    }
+    int coin;
+    OnTriggerEnter2D(Collider other)
+    {
+        if (other tagged "coin")
+            {
+            print("I have" + coin + "coins!");
+            }
     }
 }
         /*
