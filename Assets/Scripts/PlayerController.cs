@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D rb;
     public bool overworld;
     public bool platformer;
+    int coin;
     void Start()
     {
         // Get the Rigidbody2D component
@@ -30,13 +31,14 @@ public class PlayerController : MonoBehaviour
         yVector = ySpeed * verticalInput * Time.deltaTime;
         transform.Translate(xVector, yVector, 0);
     }
-    int coin;
-    OnTriggerEnter2D(Collider other)
+
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (other tagged "coin")
-            {
-            print("I have" + coin + "coins!");
-            }
+        private int score = 0;
+        if (other.compareTag("Coin"))
+        {
+            score += score
+        }
     }
 }
         /*
