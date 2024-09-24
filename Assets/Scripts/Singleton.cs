@@ -1,35 +1,37 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 
 public class Singleton : MonoBehaviour
 {
-    int coins;
+    public int coin;
+    private int health = 10;
     private int score;
-    public static Singleton St;
-
+    public static Singleton st;
+    public TextMeshProUGUI coinText;
     void Awake() {
-        if (St != null && St != this)
+        if (st != null && st != this)
         {
             Destroy(gameObject);
         }
         else
         {
-            St = this;
+            st = this;
             DontDestroyOnLoad(gameObject);
         }
     }
-    
-    // Start is called before the first frame update
-    void Start()
+
+    private void Update()
     {
-        
+        coinText.text = coin.ToString();
     }
 
-    // Update is called once per frame
-    void Update()
+    public void ChangeHealth(int cht)
     {
-        
+        health += cht;
+        Debug.Log(health.ToString());
     }
 }

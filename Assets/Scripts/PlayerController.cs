@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -10,11 +11,12 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D rb;
     public bool overworld;
     public bool platformer;
-    public int score = 0;
+    public Singleton st;
     void Start()
     {
         // Get the Rigidbody2D component
         rb = GetComponent<Rigidbody2D>();
+        st = FindObjectOfType<Singleton>();
     }
     void Update()
     {
@@ -35,17 +37,9 @@ public class PlayerController : MonoBehaviour
     void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.CompareTag("Coin")) {
-            score = (score + 1);
-            print("I have " + score + " Coins");
+            st.coin = (st.coin + 1);
+            print("I have " + st.coin + " Coins");
+            Destroy(collision.gameObject);
         }
     }
 }
-        /*
-        Vector2 movement = new Vector2(xVector, yVector);
-        rb.AddForce(movement);
-        // Hint: Use Input.GetAxis("Horizontal") to get smooth input
-        // Calculate xVector based on input
-        // Your code here: Set xVector based on the input
-    }
-}
-    */
