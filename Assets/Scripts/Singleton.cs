@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 
 public class Singleton : MonoBehaviour
@@ -49,6 +50,13 @@ public class Singleton : MonoBehaviour
         if (health > maxhealth)
         {
             health = maxhealth;
+        }
+
+        if (health < 1)
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            health = 10;
+            coin = 0;
         }
     }
 }
