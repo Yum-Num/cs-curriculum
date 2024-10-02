@@ -20,5 +20,10 @@ public class HealthBar : MonoBehaviour
         {
             singleton.ChangeHealth(-1);
         }
+
+        if (other.gameObject.CompareTag("Turret_Projectile"))
+        {
+            singleton.ChangeHealth(-1);
+        }
     }
 }
