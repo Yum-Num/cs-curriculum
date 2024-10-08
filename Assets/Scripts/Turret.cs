@@ -6,7 +6,7 @@ using UnityEngine;
 public class Turret : MonoBehaviour
 {
     private float coolDown;
-    private float firerate = 3;
+    private float firerate = 1;
     public GameObject bullet;
     private GameObject player;
 
@@ -29,7 +29,6 @@ public class Turret : MonoBehaviour
 
     void Update()
     {
-        
         coolDown -= Time.deltaTime;
         if (player && coolDown < 0)
         {
