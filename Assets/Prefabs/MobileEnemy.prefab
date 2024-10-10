@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4668079526467658351}
   - component: {fileID: 2399072710900510365}
   - component: {fileID: 1996527365673187554}
+  - component: {fileID: 6121142734513289911}
   m_Layer: 0
   m_Name: MobileEnemy
   m_TagString: Enemy
@@ -107,6 +108,23 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!114 &6121142734513289911
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3736838050167469039}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa825dbc1806b443b8ef6eaccbe3bc06, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  points: []
+  pointer: 0
+  player: {fileID: 0}
+  state: 0
+  animation: {fileID: 2864171262592659787}
 --- !u!1 &6074370204116875197
 GameObject:
   m_ObjectHideFlags: 0
