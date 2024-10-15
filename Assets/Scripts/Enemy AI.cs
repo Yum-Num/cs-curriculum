@@ -12,15 +12,17 @@ public class EnemyAI : MonoBehaviour
     public GameObject player;
     public States state = States.Wander;
     public Animator animation;
+    public Vector3 movementVector;
+    public Vector3 direction;
     public enum States
     {
         Wander,
         Chase,
-        Attack
+        Attack,
+        Die
     }
     void Update()
     {
-        Vector3 movementVector = default;
         if (state == States.Wander)
         {
             if (Vector3.Distance(transform.position, points[pointer].transform.position) < 0.01f)
@@ -29,39 +31,52 @@ public class EnemyAI : MonoBehaviour
                 pointer %= points.Count;
             }
             
-            movementVector = Vector3.MoveTowards(transform.position, points[pointer].transform.position, 1 * Time.deltaTime);
-            transform.position = movementVector;
+            transform.position = Vector3.MoveTowards(transform.position, points[pointer].transform.position, 1 * Time.deltaTime);
         }
 
         if (state == States.Chase)
         {
-            movementVector = Vector3.MoveTowards(transform.position, player.transform.position, 1f * Time.deltaTime);
-            transform.position = movementVector;
+            transform.position = Vector3.MoveTowards(transform.position, player.transform.position, 1f * Time.deltaTime);
             if (Vector3.Distance(transform.position, player.transform.position) < 1f)
             {
                 state = States.Attack;
             }
+            movementVector = Vector3.MoveTowards(transform.position, player.transform.position, 4f * Time.deltaTime);
+            direction = movementVector - transform.position;
+            Debug.Log(direction);
         }
 
         if (state == States.Attack)
         {
             Debug.Log("attacking");
         }
-
-        movementVector = movementVector.normalized;
-        if (Mathf.Abs(movementVector.x) > Mathf.Abs(movementVector.y))
+        if (Mathf.Abs(direction.x)>Mathf.Abs(direction.y))
         {
-            if (Mathf.Sign())
+            if (direction.x > 0)
             {
-                animation.Play();
+                animation.Play("WalkRight");
+                Debug.Log("right");
             }
-            
-        } 
-        else if (Mathf.Abs(movementVector.y) > Mathf.Abs(movementVector.x))
-        {
-            //do y stuff
+            if (direction.x < 0)
+            {
+                animation.Play("WalkLeft");
+                Debug.Log("left");
+            }
         }
 
+        if (Mathf.Abs(direction.y)>Mathf.Abs(direction.x))
+        {
+            if (direction.y > 0)
+            {
+                animation.Play("WalkUp");
+                Debug.Log("up");
+            }
+            else 
+            {
+                animation.Play("WalkDown");
+                Debug.Log("down");
+            }
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D other)
