@@ -43,23 +43,24 @@ public class EnemyAI : MonoBehaviour
             }
             movementVector = Vector3.MoveTowards(transform.position, player.transform.position, 4f * Time.deltaTime);
             direction = movementVector - transform.position;
-            Debug.Log(direction);
         }
 
         if (state == States.Attack)
         {
             Debug.Log("attacking");
         }
+        
+        
         if (Mathf.Abs(direction.x)>Mathf.Abs(direction.y))
         {
             if (direction.x > 0)
             {
-                animation.Play("WalkRight");
+                animation.SetFloat("Direction", 1);
                 Debug.Log("right");
             }
             if (direction.x < 0)
             {
-                animation.Play("WalkLeft");
+                animation.SetFloat("Direction", 3);
                 Debug.Log("left");
             }
         }
@@ -68,12 +69,13 @@ public class EnemyAI : MonoBehaviour
         {
             if (direction.y > 0)
             {
-                animation.Play("WalkUp");
+                animation.SetFloat("Direction", 0);
                 Debug.Log("up");
+                
             }
             else 
             {
-                animation.Play("WalkDown");
+                animation.SetFloat("Direction", 2);
                 Debug.Log("down");
             }
         }
@@ -85,6 +87,14 @@ public class EnemyAI : MonoBehaviour
         {
             player = other.gameObject;
             state = States.Chase;
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.gameObject.CompareTag("Player"))
+        {
+            state = States.Wander;
         }
     }
 
