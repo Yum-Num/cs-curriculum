@@ -14,6 +14,7 @@ public class EnemyAI : MonoBehaviour
     public Animator animation;
     public Vector3 movementVector;
     public Vector3 direction;
+
     public enum States
     {
         Wander,
@@ -21,61 +22,97 @@ public class EnemyAI : MonoBehaviour
         Attack,
         Die
     }
+
     void Update()
     {
         if (state == States.Wander)
         {
+            movementVector = Vector3.MoveTowards(transform.position, points[pointer].transform.position, 1 * Time.deltaTime);
             if (Vector3.Distance(transform.position, points[pointer].transform.position) < 0.01f)
             {
                 pointer++;
                 pointer %= points.Count;
             }
-            
-            transform.position = Vector3.MoveTowards(transform.position, points[pointer].transform.position, 1 * Time.deltaTime);
+
+            direction = movementVector - transform.position;
+            transform.position = movementVector;
         }
 
         if (state == States.Chase)
         {
-            transform.position = Vector3.MoveTowards(transform.position, player.transform.position, 1f * Time.deltaTime);
+            movementVector = Vector3.MoveTowards(transform.position, player.transform.position, 1f * Time.deltaTime);
+            
             if (Vector3.Distance(transform.position, player.transform.position) < 1f)
             {
                 state = States.Attack;
             }
-            movementVector = Vector3.MoveTowards(transform.position, player.transform.position, 4f * Time.deltaTime);
+            
             direction = movementVector - transform.position;
+            transform.position = movementVector;
         }
 
         if (state == States.Attack)
         {
-            Debug.Log("attacking");
+            if (Mathf.Abs(direction.x) > Mathf.Abs(direction.y))
+            {
+                if (direction.x > 0)
+                {
+                    animation.Play("AttackRight");
+                    Debug.Log("rightattack");
+                }
+
+                if (direction.x < 0)
+                {
+                    animation.Play("AttackLeft");
+                    Debug.Log("leftattack");
+                }
+            }
+
+            if (Mathf.Abs(direction.y) > Mathf.Abs(direction.x))
+            {
+                if (direction.y > 0)
+                {
+                    animation.Play("AttackUp");
+                    Debug.Log("upattack");
+                }
+                else
+                {
+                    animation.Play("AttackDown");
+                    Debug.Log("downattack");
+                }
+            }
+            if (Vector3.Distance(transform.position, player.transform.position) >1f)
+            {
+                state = States.Chase;
+            }
         }
-        
-        
-        if (Mathf.Abs(direction.x)>Mathf.Abs(direction.y))
+
+
+        if (Mathf.Abs(direction.x) > Mathf.Abs(direction.y))
         {
             if (direction.x > 0)
             {
-                animation.SetFloat("Direction", 1);
+                animation.SetInteger("Direction", 1);
                 Debug.Log("right");
             }
+
             if (direction.x < 0)
             {
-                animation.SetFloat("Direction", 3);
+                animation.SetInteger("Direction", 3);
                 Debug.Log("left");
             }
         }
 
-        if (Mathf.Abs(direction.y)>Mathf.Abs(direction.x))
+        if (Mathf.Abs(direction.y) > Mathf.Abs(direction.x))
         {
             if (direction.y > 0)
             {
-                animation.SetFloat("Direction", 0);
+                animation.SetInteger("Direction", 0);
                 Debug.Log("up");
-                
             }
-            else 
+            else
             {
-                animation.SetFloat("Direction", 2);
+                animation.SetInteger("Direction", 2);
                 Debug.Log("down");
             }
         }

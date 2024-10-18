@@ -796,6 +796,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6074370204116875197, guid: fbdc99957549444bfba281e61d9d218c,
+        type: 3}
+      propertyPath: m_Name
+      value: EnemySprite
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 6121142734513289911, guid: fbdc99957549444bfba281e61d9d218c, type: 3}
     m_RemovedGameObjects: []
@@ -40563,12 +40568,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1693453567}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!95 &829040748 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 8817025345248629567, guid: bc139d8bb8dee439490b05712200dfee,
-    type: 3}
-  m_PrefabInstance: {fileID: 621278199}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &848324723
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -40672,7 +40671,7 @@ MonoBehaviour:
   pointer: 0
   player: {fileID: 0}
   state: 0
-  animation: {fileID: 829040748}
+  animation: {fileID: 949256162}
   movementVector: {x: 0, y: 0, z: 0}
   direction: {x: 0, y: 0, z: 0}
 --- !u!1001 &901789533
@@ -40743,6 +40742,12 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 69c7343f050914c7787bbbe42c07b5b8, type: 3}
+--- !u!95 &949256162 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 2864171262592659787, guid: fbdc99957549444bfba281e61d9d218c,
+    type: 3}
+  m_PrefabInstance: {fileID: 436371705}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1016716630 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4281311786053241907, guid: 69c7343f050914c7787bbbe42c07b5b8,
