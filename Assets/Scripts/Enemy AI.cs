@@ -14,7 +14,7 @@ public class EnemyAI : MonoBehaviour
     public Animator animation;
     public Vector3 movementVector;
     public Vector3 direction;
-
+    public Singleton st;
     public enum States
     {
         Wander,
@@ -23,11 +23,17 @@ public class EnemyAI : MonoBehaviour
         Die
     }
 
+    public void Start()
+    {
+        st = FindFirstObjectByType<Singleton>();
+    }
+
     void Update()
     {
         if (state == States.Wander)
         {
-            movementVector = Vector3.MoveTowards(transform.position, points[pointer].transform.position, 1 * Time.deltaTime);
+            movementVector =
+                Vector3.MoveTowards(transform.position, points[pointer].transform.position, 1 * Time.deltaTime);
             if (Vector3.Distance(transform.position, points[pointer].transform.position) < 0.01f)
             {
                 pointer++;
@@ -41,30 +47,35 @@ public class EnemyAI : MonoBehaviour
         if (state == States.Chase)
         {
             movementVector = Vector3.MoveTowards(transform.position, player.transform.position, 1f * Time.deltaTime);
-            
-            if (Vector3.Distance(transform.position, player.transform.position) < 1f)
+
+            if (Vector3.Distance(transform.position, player.transform.position) < 1.5f)
             {
                 state = States.Attack;
             }
-            
+
             direction = movementVector - transform.position;
             transform.position = movementVector;
         }
 
         if (state == States.Attack)
         {
+            if (Vector3.Distance(player.transform.position, transform.position)>2)
+            {
+                state = States.Chase;
+            }
+            
             if (Mathf.Abs(direction.x) > Mathf.Abs(direction.y))
             {
                 if (direction.x > 0)
                 {
                     animation.Play("AttackRight");
-                    Debug.Log("rightattack");
+                    st.ChangeHealth(-2);
                 }
 
                 if (direction.x < 0)
                 {
                     animation.Play("AttackLeft");
-                    Debug.Log("leftattack");
+                    st.ChangeHealth(-2);
                 }
             }
 
@@ -73,20 +84,19 @@ public class EnemyAI : MonoBehaviour
                 if (direction.y > 0)
                 {
                     animation.Play("AttackUp");
-                    Debug.Log("upattack");
+                    st.ChangeHealth(-2);
                 }
                 else
                 {
                     animation.Play("AttackDown");
-                    Debug.Log("downattack");
+                    st.ChangeHealth(-2);
                 }
             }
-            if (Vector3.Distance(transform.position, player.transform.position) >1f)
+            if (Vector3.Distance(transform.position, player.transform.position) > 1.5f)
             {
                 state = States.Chase;
             }
         }
-
 
         if (Mathf.Abs(direction.x) > Mathf.Abs(direction.y))
         {
@@ -133,10 +143,5 @@ public class EnemyAI : MonoBehaviour
         {
             state = States.Wander;
         }
-    }
-
-    private void onTriggerExit2d(Collider2D other)
-    {
-        state = States.Wander;
     }
 }

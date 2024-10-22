@@ -41,12 +41,7 @@ public class Singleton : MonoBehaviour
     public void ChangeHealth(int cht)
     {
         health += cht;
-        Debug.Log(health.ToString());
-        if (health < 1)
-        {
-            print("haha noob");
-        }
-
+        Debug.Log(health);
         if (health > maxhealth)
         {
             health = maxhealth;
