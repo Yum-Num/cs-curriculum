@@ -15,6 +15,7 @@ public class EnemyAI : MonoBehaviour
     public Vector3 movementVector;
     public Vector3 direction;
     public Singleton st;
+    private float cooldown = 4f;
     public enum States
     {
         Wander,
@@ -30,10 +31,11 @@ public class EnemyAI : MonoBehaviour
 
     void Update()
     {
+        cooldown -= Time.deltaTime;
         if (state == States.Wander)
         {
             movementVector =
-                Vector3.MoveTowards(transform.position, points[pointer].transform.position, 1 * Time.deltaTime);
+                Vector3.MoveTowards(transform.position, points[pointer].transform.position, 2 * Time.deltaTime);
             if (Vector3.Distance(transform.position, points[pointer].transform.position) < 0.01f)
             {
                 pointer++;
@@ -46,7 +48,7 @@ public class EnemyAI : MonoBehaviour
 
         if (state == States.Chase)
         {
-            movementVector = Vector3.MoveTowards(transform.position, player.transform.position, 1f * Time.deltaTime);
+            movementVector = Vector3.MoveTowards(transform.position, player.transform.position, 2.5f * Time.deltaTime);
 
             if (Vector3.Distance(transform.position, player.transform.position) < 1.5f)
             {
@@ -59,7 +61,7 @@ public class EnemyAI : MonoBehaviour
 
         if (state == States.Attack)
         {
-            if (Vector3.Distance(player.transform.position, transform.position)>2)
+            if (Vector3.Distance(player.transform.position, transform.position)>1.5f)
             {
                 state = States.Chase;
             }
@@ -68,14 +70,22 @@ public class EnemyAI : MonoBehaviour
             {
                 if (direction.x > 0)
                 {
-                    animation.Play("AttackRight");
-                    st.ChangeHealth(-2);
+                    if (cooldown <= 1)
+                    {
+                        animation.Play("AttackRight");
+                        st.ChangeHealth(-2);
+                        cooldown = 4;
+                    }
                 }
 
                 if (direction.x < 0)
                 {
-                    animation.Play("AttackLeft");
-                    st.ChangeHealth(-2);
+                    if (cooldown <= 1)
+                    {
+                        animation.Play("AttackLeft");
+                        st.ChangeHealth(-2);
+                        cooldown = 4;
+                    }
                 }
             }
 
@@ -83,14 +93,23 @@ public class EnemyAI : MonoBehaviour
             {
                 if (direction.y > 0)
                 {
-                    animation.Play("AttackUp");
-                    st.ChangeHealth(-2);
+                    if (cooldown <= 1)
+                    {
+                        animation.Play("AttackUp");
+                        st.ChangeHealth(-2);
+                        cooldown = 4;
+                    }
                 }
-                else
+                else if (direction.y < 0)
                 {
-                    animation.Play("AttackDown");
-                    st.ChangeHealth(-2);
+                    if (cooldown <= 1)
+                    {
+                        animation.Play("AttackDown");
+                        st.ChangeHealth(-2);
+                        cooldown = 4;
+                    }
                 }
+                
             }
             if (Vector3.Distance(transform.position, player.transform.position) > 1.5f)
             {
