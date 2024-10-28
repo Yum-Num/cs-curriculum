@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -16,6 +17,9 @@ public class EnemyAI : MonoBehaviour
     public Vector3 direction;
     public Singleton st;
     private float cooldown = 4f;
+    public int enemyhp = 10;
+    private GameObject enemy;
+    public GameObject Axel;
     public enum States
     {
         Wander,
@@ -31,6 +35,7 @@ public class EnemyAI : MonoBehaviour
 
     void Update()
     {
+        Debug.Log(enemyhp);
         cooldown -= Time.deltaTime;
         if (state == States.Wander)
         {
@@ -145,6 +150,11 @@ public class EnemyAI : MonoBehaviour
                 Debug.Log("down");
             }
         }
+        if (enemyhp < 1)
+        {
+            Destroy(enemy);
+            Instantiate(Axel, transform.position, quaternion.identity);
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -153,14 +163,6 @@ public class EnemyAI : MonoBehaviour
         {
             player = other.gameObject;
             state = States.Chase;
-        }
-    }
-
-    private void OnTriggerExit2D(Collider2D other)
-    {
-        if (other.gameObject.CompareTag("Player"))
-        {
-            state = States.Wander;
         }
     }
 }
