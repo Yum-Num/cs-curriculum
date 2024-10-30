@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Unity.Mathematics;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.UIElements;
 
 public class EnemyAI : MonoBehaviour
@@ -17,7 +18,7 @@ public class EnemyAI : MonoBehaviour
     public Vector3 direction;
     public Singleton st;
     private float cooldown = 4f;
-    public int enemyhp = 10;
+    public int enemyhp = 2;
     private GameObject enemy;
     public GameObject Axel;
     public enum States
@@ -150,13 +151,18 @@ public class EnemyAI : MonoBehaviour
                 Debug.Log("down");
             }
         }
+
         if (enemyhp < 1)
         {
             Destroy(enemy);
-            Instantiate(Axel, transform.position, quaternion.identity);
         }
+        //not destorying YET ;( huuurahh
     }
-
+    public void ESetHealth(int amount)
+    {
+        enemyhp += amount;
+        Debug.Log("health" + enemyhp);
+    }
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.CompareTag("Player"))

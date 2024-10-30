@@ -146,6 +146,7 @@ GameObject:
   - component: {fileID: 6449364802413463}
   - component: {fileID: 3557327843128524543}
   - component: {fileID: 5774960653562304022}
+  - component: {fileID: 1068419982427778066}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -253,4 +254,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc6dd32abcac042189a319a30dc194bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  xSpeed: 5
+  ySpeed: 5
   overworld: 1
+  platformer: 0
+  st: {fileID: 0}
+--- !u!114 &1068419982427778066
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8049566408774423969}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9ef911b281c94e2898486789cf2f786, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  eai: {fileID: 0}

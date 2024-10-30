@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -7,30 +8,36 @@ using UnityEngine;
 
 public class PlayerAttack : MonoBehaviour
 {
-    private bool attacking = false;
+    public TopDown_AnimatorController tac;
     public EnemyAI eai;
-    void Start()
+    public bool touching;
+
+    private void Start()
     {
+        tac = GetComponentInChildren<TopDown_AnimatorController>();
+        eai = GetComponent<EnemyAI>();
+    }
+/*
+    private void OnCollisionEnter(Collision other)
+    {
+        if (other.gameObject.CompareTag("Enemy"))
+        touching = true;
     }
 
-// Update is called once per frame
-    void Update()
+    private void OnCollisionExit(Collision other)
     {
-        if (Input.GetMouseButton(0))
-        {
-            Debug.Log("mosuedown");
-            attacking = true;
-        }
+        if (other.gameObject.CompareTag("Enemy))
+        touching = false;
     }
-    
+    */
+
     private void OnCollisionEnter2D(Collision2D other)
     {
-        Debug.Log("Hit");
         if (other.gameObject.CompareTag("Enemy"))
         {
-            if (attacking == true)
+            if (tac.attacking)
             {
-                eai.enemyhp -= 1;
+                other.gameObject.GetComponent<EnemyAI>().ESetHealth(-1);
             }
         }
     }

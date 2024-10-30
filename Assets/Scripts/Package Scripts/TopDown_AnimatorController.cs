@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class TopDown_AnimatorController : MonoBehaviour
 {
+    public bool attacking = true;
+    private PlayerAttack pa;
     [SerializeField]
     RuntimeAnimatorController animShovel;
 
@@ -76,6 +78,7 @@ public class TopDown_AnimatorController : MonoBehaviour
 
         if (Input.GetMouseButton(0))
         {
+            attacking = true;
             anim.SetTrigger("Attack");
             anim.SetBool("IsWalking", false);
             
