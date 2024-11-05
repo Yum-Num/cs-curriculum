@@ -18,9 +18,9 @@ public class EnemyAI : MonoBehaviour
     public Vector3 direction;
     public Singleton st;
     private float cooldown = 4f;
-    public int enemyhp = 2;
+    public int enemyhp = 4;
     private GameObject enemy;
-    public GameObject Axel;
+    public GameObject Axe;
     public enum States
     {
         Wander,
@@ -36,7 +36,7 @@ public class EnemyAI : MonoBehaviour
 
     void Update()
     {
-        Debug.Log(enemyhp);
+        Debug.Log("ehealth" + enemyhp.ToString());
         cooldown -= Time.deltaTime;
         if (state == States.Wander)
         {
@@ -154,9 +154,10 @@ public class EnemyAI : MonoBehaviour
 
         if (enemyhp < 1)
         {
-            Destroy(enemy);
+            Debug.Log("FUCK");
+            Destroy(this.gameObject);
+            Instantiate(Axe,transform.position,Quaternion.identity);
         }
-        //not destorying YET ;( huuurahh
     }
     public void ESetHealth(int amount)
     {

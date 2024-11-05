@@ -12,11 +12,15 @@ public class PlayerController : MonoBehaviour
     public bool overworld;
     public bool platformer;
     public Singleton st;
+    private TopDown_AnimatorController TD;
+    private EnemyAI eai;
     void Start()
     {
         // Get the Rigidbody2D component
         rb = GetComponent<Rigidbody2D>();
         st = FindObjectOfType<Singleton>();
+        TD = FindObjectOfType<TopDown_AnimatorController>();
+        eai = FindObjectOfType<EnemyAI>();
     }
     void Update()
     {
@@ -40,6 +44,14 @@ public class PlayerController : MonoBehaviour
             st.coin = (st.coin + 1);
             print("I have " + st.coin + " Coins");
             Destroy(collision.gameObject);
+        }
+
+        if (collision.CompareTag("Axe"))
+        {
+            Debug.Log("touched nonconsentually");
+            TD.SwitchToAxe();
+            Debug.Log("no switcher");
+            Destroy(eai.Axe);
         }
     }
 }
