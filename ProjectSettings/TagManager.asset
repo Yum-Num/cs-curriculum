@@ -9,6 +9,8 @@ TagManager:
   - Axe
   - Spikes
   - Turret_Projectile
+  - Cave
+  - Cave Wall
   layers:
   - Default
   - TransparentFX

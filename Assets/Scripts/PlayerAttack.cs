@@ -38,7 +38,6 @@ public class PlayerAttack : MonoBehaviour
             if (tac.attacking)
             {
                 other.gameObject.GetComponent<EnemyAI>().ESetHealth(-1);
-                //joe is awsome
             }
         }
     }

@@ -14,6 +14,10 @@ public class PlayerController : MonoBehaviour
     public Singleton st;
     private TopDown_AnimatorController TD;
     private EnemyAI eai;
+    public bool daxe = false;
+    public float jumpforce = 1;
+    public float currentforce = 1;
+    
     void Start()
     {
         // Get the Rigidbody2D component
@@ -24,9 +28,20 @@ public class PlayerController : MonoBehaviour
     }
     void Update()
     {
-        if (platformer)
+        if (Physics2D.Raycast(transform.position, Vector2.down, 1f) && Input.GetKey(KeyCode.Space))
         {
-            ySpeed = 0;
+            jump();
+        }
+        if (overworld)
+        {
+            GetComponent<Rigidbody2D>().gravityScale = 0f;
+            ySpeed = 5f;
+        }
+        else
+        {
+            GetComponent<Rigidbody2D>().gravityScale = 1f;
+            ySpeed = 0f;
+            
         }
 
         // Handle input
@@ -48,10 +63,15 @@ public class PlayerController : MonoBehaviour
 
         if (collision.CompareTag("Axe"))
         {
-            Debug.Log("touched nonconsentually");
             TD.SwitchToAxe();
-            Debug.Log("no switcher");
-            Destroy(eai.Axe);
+            daxe = true;
         }
+    }
+
+    void jump()
+    {
+        rb.AddForce(Vector2.up * jumpforce);
+
+        currentforce = jumpforce;
     }
 }

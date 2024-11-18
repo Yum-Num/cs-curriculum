@@ -21,6 +21,7 @@ public class EnemyAI : MonoBehaviour
     public int enemyhp = 4;
     private GameObject enemy;
     public GameObject Axe;
+    public PlayerController pc;
     public enum States
     {
         Wander,
@@ -32,10 +33,16 @@ public class EnemyAI : MonoBehaviour
     public void Start()
     {
         st = FindFirstObjectByType<Singleton>();
+        pc = FindFirstObjectByType<PlayerController>();
     }
 
     void Update()
     {
+        if (pc.daxe)
+        {
+            Debug.Log("not sending");
+            Destroy(Axe);
+        }
         Debug.Log("ehealth" + enemyhp.ToString());
         cooldown -= Time.deltaTime;
         if (state == States.Wander)
