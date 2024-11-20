@@ -8,6 +8,7 @@ public class TopDown_EnemyAnimator : MonoBehaviour
 
     Vector3 prevPos;
     Animator anim;
+    float attackcooldown = 2;
 
     // Start is called before the first frame update
     void Start()
@@ -45,10 +46,12 @@ public class TopDown_EnemyAnimator : MonoBehaviour
 
         prevPos = transform.position;
 
-        if (Input.GetMouseButton(0))
+        if (Input.GetMouseButton(0) && attackcooldown > 0.1)
         {
             Attack();
+            attackcooldown -= Time.deltaTime;
         }
+        
 
         IsAttacking = anim.GetCurrentAnimatorStateInfo(0).IsTag("Attack");
     }
