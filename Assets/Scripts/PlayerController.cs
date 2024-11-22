@@ -15,7 +15,7 @@ public class PlayerController : MonoBehaviour
     private TopDown_AnimatorController TD;
     private EnemyAI eai;
     public bool daxe = false;
-    public float jumpforce = .08f;
+    public float jumpforce = .15f;
     public float decayrate = 1;
     private 
     
@@ -33,7 +33,7 @@ public class PlayerController : MonoBehaviour
         Debug.DrawRay(transform.position + new Vector3(0.2f, 0, 0), Vector2.down, Color.red);
         if (Physics2D.Raycast(transform.position + new Vector3(0.2f, 0, 0), Vector2.down, 1f) && Input.GetKey(KeyCode.Space) ||Physics2D.Raycast(transform.position - new Vector3(0.2f, 0, 0), Vector2.down, 1f)  && Input.GetKey(KeyCode.Space))
         {
-            jumpforce = .08f;
+            jumpforce = .15f;
             Debug.Log("raycasted");
             jump();
         }

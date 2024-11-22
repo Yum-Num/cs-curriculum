@@ -20,12 +20,10 @@ public class Singleton : MonoBehaviour
         Debug.Log("hello");
         if (st != null && st != this)
         {
-            Debug.Log("U R DED");
             Destroy(gameObject);
         }
         else
         {
-            Debug.Log("Hi again");
             st = this;
             DontDestroyOnLoad(gameObject);
         }
