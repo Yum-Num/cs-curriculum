@@ -15,9 +15,7 @@ public class PlayerController : MonoBehaviour
     private TopDown_AnimatorController TD;
     private EnemyAI eai;
     public bool daxe = false;
-    public float jumpforce = .15f;
-    public float decayrate = 1;
-    private 
+    public float jumpforce = .04f;
     
     void Start()
     {
@@ -31,22 +29,31 @@ public class PlayerController : MonoBehaviour
     {
         Debug.Log(jumpforce);
         Debug.DrawRay(transform.position + new Vector3(0.2f, 0, 0), Vector2.down, Color.red);
-        if (Physics2D.Raycast(transform.position + new Vector3(0.2f, 0, 0), Vector2.down, 1f) && Input.GetKey(KeyCode.Space) ||Physics2D.Raycast(transform.position - new Vector3(0.2f, 0, 0), Vector2.down, 1f)  && Input.GetKey(KeyCode.Space))
+        if (GetComponent<Rigidbody2D>().gravityScale == 1)
         {
-            jumpforce = .15f;
-            Debug.Log("raycasted");
-            jump();
+            if (Physics2D.Raycast(transform.position + new Vector3(0.2f, 0, 0), Vector2.down, 1f) && Input.GetKey(KeyCode.Space) ||Physics2D.Raycast(transform.position - new Vector3(0.2f, 0, 0), Vector2.down, 1f)  && Input.GetKey(KeyCode.Space))
+            {
+                jumpforce = .04f;
+                Debug.Log("raycasted");
+                jump();
+            }
+        }
+        else
+        {
+            if (Physics2D.Raycast(transform.position + new Vector3(0.2f, 0, 0), Vector2.up, 1f) && Input.GetKey(KeyCode.Space) ||Physics2D.Raycast(transform.position - new Vector3(0.2f, 0, 0), Vector2.up, 1f)  && Input.GetKey(KeyCode.Space))
+            {
+                jumpforce = .04f;
+                Debug.Log("raycasted");
+                jump();
+            }
         }
         if (overworld)
         {
-            GetComponent<Rigidbody2D>().gravityScale = 0f;
             ySpeed = 5f;
         }
         else
         {
-            GetComponent<Rigidbody2D>().gravityScale = 1f;
             ySpeed = 0f;
-            
         }
 
         // Handle input
@@ -56,6 +63,20 @@ public class PlayerController : MonoBehaviour
         xVector = xSpeed * horizontalInput * Time.deltaTime;
         yVector = ySpeed * verticalInput * Time.deltaTime;
         transform.Translate(xVector, yVector, 0);
+        if (GetComponent<Rigidbody2D>().gravityScale == 1)
+        {
+            if (Input.GetMouseButton(1) && (Physics2D.Raycast(transform.position + new Vector3(0.2f, 0, 0), Vector2.down, 1f)||Physics2D.Raycast(transform.position - new Vector3(0.2f, 0, 0), Vector2.down, 1f)))
+            {
+                GetComponent<Rigidbody2D>().gravityScale *= -1;
+            }
+        }
+        else
+        {
+            if (Input.GetMouseButton(1) && (Physics2D.Raycast(transform.position + new Vector3(0.2f, 0, 0), Vector2.up, 1f)||Physics2D.Raycast(transform.position - new Vector3(0.2f, 0, 0), Vector2.up, 1f)))
+            {
+                GetComponent<Rigidbody2D>().gravityScale *= -1;
+            }
+        }
     }
 
     void OnTriggerEnter2D(Collider2D collision)
