@@ -28,7 +28,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5456371644167720279}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -1}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 1
@@ -132,6 +132,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63f52f1c934da4613a15cf68f3b0f562, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  attacking: 1
   animShovel: {fileID: 9100000, guid: 1ccf3beb0c6f246e99cc9a927f1fd12e, type: 2}
   animAxe: {fileID: 9100000, guid: 8cf1007ae09a548dfb24a581133c15db, type: 2}
 --- !u!1 &8049566408774423969
@@ -259,6 +260,8 @@ MonoBehaviour:
   overworld: 1
   platformer: 0
   st: {fileID: 0}
+  daxe: 0
+  jumpforce: 0.04
 --- !u!114 &1068419982427778066
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -271,4 +274,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9ef911b281c94e2898486789cf2f786, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tac: {fileID: 0}
   eai: {fileID: 0}
+  touching: 0

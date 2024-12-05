@@ -19,7 +19,6 @@ public class PlayerController : MonoBehaviour
     
     void Start()
     {
-        // Get the Rigidbody2D component
         rb = GetComponent<Rigidbody2D>();
         st = FindObjectOfType<Singleton>();
         TD = FindObjectOfType<TopDown_AnimatorController>();
@@ -27,7 +26,14 @@ public class PlayerController : MonoBehaviour
     }
     void Update()
     {
-        Debug.Log(jumpforce);
+        if (overworld)
+        {
+            ySpeed = 5f;
+        }
+        else
+        {
+            ySpeed = 0f;
+        }
         Debug.DrawRay(transform.position + new Vector3(0.2f, 0, 0), Vector2.down, Color.red);
         if (GetComponent<Rigidbody2D>().gravityScale == 1)
         {
@@ -42,32 +48,16 @@ public class PlayerController : MonoBehaviour
         {
             if (Physics2D.Raycast(transform.position + new Vector3(0.2f, 0, 0), Vector2.up, 1f) && Input.GetKey(KeyCode.Space) ||Physics2D.Raycast(transform.position - new Vector3(0.2f, 0, 0), Vector2.up, 1f)  && Input.GetKey(KeyCode.Space))
             {
-                jumpforce = .04f;
-                Debug.Log("raycasted");
+                jumpforce = -.04f;
                 jump();
             }
         }
-        if (overworld)
-        {
-            ySpeed = 5f;
-        }
-        else
-        {
-            ySpeed = 0f;
-        }
-
-        // Handle input
-        float horizontalInput = Input.GetAxis("Horizontal");
-        float verticalInput = Input.GetAxis("Vertical");
-        // Your code here: Detect input for left and right movement
-        xVector = xSpeed * horizontalInput * Time.deltaTime;
-        yVector = ySpeed * verticalInput * Time.deltaTime;
-        transform.Translate(xVector, yVector, 0);
         if (GetComponent<Rigidbody2D>().gravityScale == 1)
         {
             if (Input.GetMouseButton(1) && (Physics2D.Raycast(transform.position + new Vector3(0.2f, 0, 0), Vector2.down, 1f)||Physics2D.Raycast(transform.position - new Vector3(0.2f, 0, 0), Vector2.down, 1f)))
             {
                 GetComponent<Rigidbody2D>().gravityScale *= -1;
+                TD.flip();
             }
         }
         else
@@ -75,8 +65,15 @@ public class PlayerController : MonoBehaviour
             if (Input.GetMouseButton(1) && (Physics2D.Raycast(transform.position + new Vector3(0.2f, 0, 0), Vector2.up, 1f)||Physics2D.Raycast(transform.position - new Vector3(0.2f, 0, 0), Vector2.up, 1f)))
             {
                 GetComponent<Rigidbody2D>().gravityScale *= -1;
+                TD.flip();
             }
         }
+        float horizontalInput = Input.GetAxis("Horizontal");
+        float verticalInput = Input.GetAxis("Vertical");
+        // Your code here: Detect input for left and right movement
+        xVector = xSpeed * horizontalInput * Time.deltaTime;
+        yVector = ySpeed * verticalInput * Time.deltaTime;
+        transform.Translate(xVector, yVector, 0);
     }
 
     void OnTriggerEnter2D(Collider2D collision)

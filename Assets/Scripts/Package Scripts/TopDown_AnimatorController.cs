@@ -30,6 +30,17 @@ public class TopDown_AnimatorController : MonoBehaviour
 
     }
 
+    public void flip()
+    {
+        if (sprite.flipY == true)
+        {
+            sprite.flipY = false;
+        }
+        else
+        {
+            sprite.flipY = true;
+        }
+    }
     private void Update()
     {
         if (Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0)
