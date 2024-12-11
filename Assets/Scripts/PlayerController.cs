@@ -1,5 +1,7 @@
+using System;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class PlayerController : MonoBehaviour
 {
@@ -15,7 +17,8 @@ public class PlayerController : MonoBehaviour
     private TopDown_AnimatorController TD;
     private EnemyAI eai;
     public bool daxe = false;
-    public float jumpforce = .15f;
+    public float jumpforce = 5f;
+    public float jumpcooldown = .8f;
     
     void Start()
     {
@@ -26,6 +29,7 @@ public class PlayerController : MonoBehaviour
     }
     void Update()
     {
+        jumpcooldown -= Time.deltaTime;
         if (overworld)
         {
             ySpeed = 5f;
@@ -37,18 +41,17 @@ public class PlayerController : MonoBehaviour
         Debug.DrawRay(transform.position + new Vector3(0.2f, 0, 0), Vector2.down, Color.red);
         if (GetComponent<Rigidbody2D>().gravityScale == 1)
         {
-            if (Physics2D.Raycast(transform.position + new Vector3(0.2f, 0, 0), Vector2.down, 1f) && Input.GetKey(KeyCode.Space) ||Physics2D.Raycast(transform.position - new Vector3(0.2f, 0, 0), Vector2.down, 1f)  && Input.GetKey(KeyCode.Space))
+            if (Physics2D.Raycast(transform.position + new Vector3(0.2f, 0, 0), Vector2.down, 1f) && Input.GetKey(KeyCode.Space) && jumpcooldown < 0 ||Physics2D.Raycast(transform.position - new Vector3(0.2f, 0, 0), Vector2.down, 1f)  && Input.GetKey(KeyCode.Space) && jumpcooldown < 0)
             {
-                jumpforce = .15f;
                 Debug.Log("raycasted");
                 jump();
             }
         }
         else
         {
-            if (Physics2D.Raycast(transform.position + new Vector3(0.2f, 0, 0), Vector2.up, 1f) && Input.GetKey(KeyCode.Space) ||Physics2D.Raycast(transform.position - new Vector3(0.2f, 0, 0), Vector2.up, 1f)  && Input.GetKey(KeyCode.Space))
+            if (Physics2D.Raycast(transform.position + new Vector3(0.2f, 0, 0), Vector2.up, 1f) && Input.GetKey(KeyCode.Space) && jumpcooldown < 0 ||Physics2D.Raycast(transform.position - new Vector3(0.2f, 0, 0), Vector2.up, 1f)  && Input.GetKey(KeyCode.Space) && jumpcooldown < 0)
             {
-                jumpforce = -.15f;
+                jumpforce *= -1;
                 jump();
             }
         }
@@ -78,7 +81,8 @@ public class PlayerController : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.CompareTag("Coin")) {
+        if (collision.CompareTag("Coin"))
+        {
             st.coin = (st.coin + 1);
             print("I have " + st.coin + " Coins");
             Destroy(collision.gameObject);
@@ -91,8 +95,24 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.CompareTag("HappyBoc"))
+        {
+            jumpforce = .5f;
+            jumpcooldown = 0;
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        jumpforce = 5;
+        jumpcooldown = .3f;
+    }
+
     void jump()
     {
         rb.AddForce(Vector2.up * jumpforce, ForceMode2D.Impulse);
+        jumpcooldown = .8f;
     }
 }
